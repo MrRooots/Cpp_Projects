@@ -19,7 +19,7 @@ int binare_search(int arr[], int left_index, int right_index, int element_to_sea
       return -1;
     }
 	}
-}aaa
+}
 
 int main() {
 	int length; cout << "Enter a length of the array: "; cin >> length;
