@@ -36,7 +36,7 @@ int main() {
 		}
 
 	}
-
+	sajhdgasjh
 	cout << "Enter a number to find: "; cin >> element_to_search;
 
 	index = binare_search(array, 0, length, element_to_search);
