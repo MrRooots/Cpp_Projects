@@ -15,27 +15,27 @@ public:
   // Пустой конструктор по умолчанию
   RecordBook() {};
   // Прототип конструктора с параметрами
-  RecordBook( char* name, char* surname, char* middle_name,
-              char* date_1, char* date_2, char* date_3, char* date_4, char* date_5, char* date_6,
-              char* name_1, char* name_2, char* name_3, char* name_4, char* name_5, char* name_6,
+  RecordBook( const char* name, const char* surname, const char* middle_name,
+              const char* date_1, const char* date_2, const char* date_3, const char* date_4, const  char* date_5, const char* date_6,
+              const char* name_1, const char* name_2, const char* name_3, const char* name_4, const  char* name_5, const char* name_6,
               float ball_1, float ball_2, float ball_3,
               bool ball_4, bool ball_5, bool ball_6);
   void save_binary(string path, RecordBook object);
-  void read_file(string path);
+  void read_binary(string path, RecordBook& my_record);
   void format_print();
 private:
   // Переменные класса
-  char *name, *surname, *middle_name;  // ФИО
-  char *date_1, *date_2, *date_3, *date_4, *date_5, *date_6;  // Дата
-  char *name_1, *name_2, *name_3, *name_4, *name_5, *name_6;  // Названия экзаменов
+  const char *name, *surname, *middle_name;  // ФИО
+  const char *date_1, *date_2, *date_3, *date_4, *date_5, *date_6;  // Дата
+  const char *name_1, *name_2, *name_3, *name_4, *name_5, *name_6;  // Названия экзаменов
   float ball_1, ball_2, ball_3;  // Баллы за три экзамена
   bool ball_4, ball_5, ball_6;  // Зачеты
 };
 
 // Конструктор с параметрами
-RecordBook::RecordBook( char* name, char* surname, char* middle_name,
-            char* date_1, char* date_2, char* date_3, char* date_4, char* date_5, char* date_6,
-            char* name_1, char* name_2, char* name_3, char* name_4, char* name_5, char* name_6,
+RecordBook::RecordBook( const char* name, const  char* surname, const char* middle_name,
+            const char* date_1, const char* date_2, const char* date_3, const char* date_4, const char* date_5, const char* date_6,
+            const char* name_1, const char* name_2, const char* name_3, const char* name_4, const char* name_5, const char* name_6,
             float ball_1, float ball_2, float ball_3,
             bool ball_4, bool ball_5, bool ball_6) {
   this->name = name; this->surname = surname; this->middle_name = middle_name;
@@ -87,7 +87,7 @@ void RecordBook::save_binary(string path, RecordBook object) {
 }
 
 // Чтение из бинарного файла
-void RecordBook::read_file(string path) {
+void RecordBook::read_binary(string path, RecordBook& my_record) {
   ifstream file;
   file.open(path, ios::binary);
   RecordBook object;  // Пустой объект для записи в НЕГО из файла
@@ -99,37 +99,50 @@ void RecordBook::read_file(string path) {
 
     // Запишем то, что считали из файла в объект my_record_read
     file.read((char*)&object, sizeof(RecordBook));
-    object.format_print();  // Вывод всех считанных данных)
+    my_record = object;
   }
   file.close();
 }
 
 int main() {
   // Инициализация объекта my_record класса RecordBook
-  RecordBook my_record(
-    "Ivan", "Ivanov", "Ivanovich",
-    "01.01.2020", "02.01.2020", "03.01.2020", "04.01.2020", "05.01.2020", "06.01.2020",
-    "Mathematical Analysis", "Algebra and Geometry", "Basics of programming",
-    "English Language", "Effecient Communication", "Physical Education",
-    100.0, 150.0, 1020.0,
-    true, true, true
-  );
-  string path; cout << "Enter a file name with extension: "; cin >> path;  // Ввод имя файла, в который будет сохранен объект класса
+  RecordBook my_record;
+
   size_t choice;
+  string path; cout << "Enter a file name with extension: "; cin >> path;  // Ввод имя файла, в который будет сохранен объект класса
+  cout << "Do you have a save file?(1/0) "; cin >> choice;
 
-  cout << "Exit - 0\nSave - 1\nRead - 2\n";
+  if (choice == 1) {
+    my_record.read_binary(path, my_record);
+    my_record.format_print();
+  } else {
+    RecordBook my_record_created(
+      "Ivan", "Ivanov", "Ivanovich",
+      "01.01.2020", "02.01.2020", "03.01.2020", "04.01.2020", "05.01.2020", "06.01.2020",
+      "Mathematical Analysis", "Algebra and Geometry", "Basics of programming",
+      "English Language", "Effecient Communication", "Physical Education",
+      100.0, 150.0, 1020.0,
+      true, true, true);
 
-  while (true) {
-    cin >> choice;
-    if (choice == 1) {
-      my_record.save_binary(path, my_record);  // Запись файла по пути
-      // my_record.format_print();
-    }
-    if (choice == 2) {
-      my_record.read_file(path);  // Чтение файла
-    }
-    if (choice == 0) {
-      return 0;
-    }
+    my_record = my_record_created;
+    my_record.save_binary(path, my_record);
   }
+
+
+  // cout << "Exit - 0\nSave - 1\nRead - 2\n";
+
+  // while (true) {
+  //   cin >> choice;
+  //   if (choice == 1) {
+  //     my_record.save_binary(path, my_record);  // Запись файла по пути
+  //     // my_record.format_print();
+  //   }
+  //   if (choice == 2) {
+  //     my_record.read_binary(path);  // Чтение файла
+  //   }
+  //   if (choice == 0) {
+  //     return 0;
+  //   }
+  // }
+  return 0;
 }
