@@ -1,88 +1,18 @@
-#include <iostream>
 #include <string>
 #include <fstream>   // Запись в файл
-using namespace std;
 
 typedef char LIST_TYPO[3][255];  // Пользовательски тип, для возврата из функции - массив инициалов
 
 class RecordBook {
 public:
-  // Конструктор по умолчанию
-  RecordBook(){
-    // Инициалы
-    char initials[3][255] = {"Invanov", "Ivan", "Ivanovich"};
-    for (size_t i = 0; i < 3; i++) {
-      for (size_t l = 0; l < 255; l++) {
-        this->initials[i][l] = initials[i][l];
-      }
-    }
-
-    // Предметы
-    char subject_names[6][255] = {
-      "Mathematical Analysis", "Algebra and Geometry", "Basics of programming",
-      "English Language", "Effecient Communication", "Physical Education"};
-    for (size_t i = 0; i < 6; i++) {
-      for (size_t l = 0; l < 255; l++) {
-        this->subject_names[i][l] = subject_names[i][l];
-      }
-    }
-
-    // Даты
-    char dates[6][255] = {
-      "01.01.2020", "02.01.2020", "03.01.2020",
-      "04.01.2020", "05.01.2020", "06.01.2020"};
-    for (size_t i = 0; i < 6; i++) {
-      for (size_t l = 0; l < 255; l++) {
-        this->dates[i][l] = dates[i][l];
-      }
-    }
-
-    // Баллы
-    size_t pass_balls[3]={0, 0, 0}; for (size_t i = 0; i < 3; i++) {this->pass_balls[i] = pass_balls[i];}
-    float full_balls[3]={0, 0, 0}; for (size_t i = 0; i < 3; i++) {this->full_balls[i] = full_balls[i];}
-  };
-
-  // Конструктор с параметрами
-  RecordBook(char initials[][255], char subject_names[][255], char dates[][255], size_t pass_balls[], float full_balls[]) {
-    for (size_t i = 0; i < 3; i++) {
-      for (size_t l = 0; l < 255; l++) {
-        this->initials[i][l] = initials[i][l];
-      }
-    }
-    for (size_t i = 0; i < 6; i++) {
-      for (size_t l = 0; l < 255; l++) {
-        this->subject_names[i][l] = subject_names[i][l];
-      }
-    }
-    for (size_t i = 0; i < 6; i++) {
-      for (size_t l = 0; l < 255; l++) {
-        this->dates[i][l] = dates[i][l];
-      }
-    }
-    for (size_t i = 0; i < 3; i++) {
-      this->pass_balls[i] = pass_balls[i];
-    }
-    for (size_t i = 0; i < 3; i++) {
-      this->full_balls[i] = full_balls[i];
-    }
-  };
-
-  // Возврат пользовательского типа - массива инициалов
-  LIST_TYPO* get_initials() {
-    static LIST_TYPO list{"", "", ""};
-    for (size_t i = 0; i < 3; i++) {
-      for (size_t l = 0; l < 255; l++) {
-        list[i][l] = initials[i][l];
-      }
-    }
-    return &initials;
-  }
-
-  void get_full_info();                          // Вывод всей информации о студенте
-  void save_binary(string, RecordBook);          // Сохранение в файл
-  RecordBook read_binary(string, RecordBook &);  // Чтение из файла
-  void change_information_string(char[255]);     // Изменение строковых данных
-  void change_information_digits(size_t);        //  Изменение числовой инф-ии
+  RecordBook();                                                             // Конструктор по умолчанию
+  RecordBook(char[][255], char[][255], char[][255], size_t[], float[]);     // Конструктор с параметрами
+  LIST_TYPO* get_initials();                                                // Возврат пользовательского типа - массива инициалов
+  void get_full_info();                                                     // Вывод всей информации о студенте
+  void save_binary(string, RecordBook);                                     // Сохранение в файл
+  RecordBook read_binary(string, RecordBook &);                             // Чтение из файла
+  void change_information_string(char[255]);                                // Изменение строковых данных
+  void change_information_digits(size_t);                                   //  Изменение числовой инф-ии
 
 private:
   char initials[3][255];        // Инициалы
@@ -91,6 +21,74 @@ private:
   size_t pass_balls[3];         // Зачетные баллы
   float full_balls[3];          // Числовые баллы
 };
+
+RecordBook::RecordBook() {
+  // Инициалы
+  char initials[3][255] = {"Invanov", "Ivan", "Ivanovich"};
+  for (size_t i = 0; i < 3; i++) {
+    for (size_t l = 0; l < 255; l++) {
+      this->initials[i][l] = initials[i][l];
+    }
+  }
+
+  // Предметы
+  char subject_names[6][255] = {
+    "Mathematical Analysis", "Algebra and Geometry", "Basics of programming",
+    "English Language", "Effecient Communication", "Physical Education"};
+  for (size_t i = 0; i < 6; i++) {
+    for (size_t l = 0; l < 255; l++) {
+      this->subject_names[i][l] = subject_names[i][l];
+    }
+  }
+
+  // Даты
+  char dates[6][255] = {
+    "01.01.2020", "02.01.2020", "03.01.2020",
+    "04.01.2020", "05.01.2020", "06.01.2020"};
+  for (size_t i = 0; i < 6; i++) {
+    for (size_t l = 0; l < 255; l++) {
+      this->dates[i][l] = dates[i][l];
+    }
+  }
+
+  // Баллы
+  size_t pass_balls[3]={0, 0, 0}; for (size_t i = 0; i < 3; i++) {this->pass_balls[i] = pass_balls[i];}
+  float full_balls[3]={0, 0, 0}; for (size_t i = 0; i < 3; i++) {this->full_balls[i] = full_balls[i];}
+}
+
+RecordBook::RecordBook(char initials[][255], char subject_names[][255], char dates[][255], size_t pass_balls[], float full_balls[]) {
+  for (size_t i = 0; i < 3; i++) {
+    for (size_t l = 0; l < 255; l++) {
+      this->initials[i][l] = initials[i][l];
+    }
+  }
+  for (size_t i = 0; i < 6; i++) {
+    for (size_t l = 0; l < 255; l++) {
+      this->subject_names[i][l] = subject_names[i][l];
+    }
+  }
+  for (size_t i = 0; i < 6; i++) {
+    for (size_t l = 0; l < 255; l++) {
+      this->dates[i][l] = dates[i][l];
+    }
+  }
+  for (size_t i = 0; i < 3; i++) {
+    this->pass_balls[i] = pass_balls[i];
+  }
+  for (size_t i = 0; i < 3; i++) {
+    this->full_balls[i] = full_balls[i];
+  }
+}
+
+LIST_TYPO* RecordBook::get_initials() {
+  static LIST_TYPO list{"", "", ""};
+  for (size_t i = 0; i < 3; i++) {
+    for (size_t l = 0; l < 255; l++) {
+      list[i][l] = initials[i][l];
+    }
+  }
+  return &initials;
+}
 
 // Вывод имеющихся данных
 void RecordBook::get_full_info() {

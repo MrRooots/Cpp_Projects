@@ -1,6 +1,8 @@
+#include <iostream>
+#include <string>
 #include "recordbook.h"   // Класс зачетка
 #include "group.h"        // Класс группа
-
+using namespace std;
 
 // Repl.it link --> https://repl.it/@MrRooots/RecordBooksClass
 int main() {
@@ -11,7 +13,10 @@ int main() {
     "Mathematical Analysis", "Algebra and Geometry", "Basics of programming",
     "English Language", "Effecient Communication", "Physical Education"
   };
-  char dates_list[6][255]={"01.01.2020", "02.01.2020", "03.01.2020", "04.01.2020", "05.01.2020", "06.01.2020"};
+  char dates_list[6][255]={
+    "01.01.2020", "02.01.2020", "03.01.2020",
+    "04.01.2020", "05.01.2020", "06.01.2020"
+  };
   size_t pass_balls_list[3]={1, 0, 1};
   float full_balls_list[3]={100, 101, 102};
   RecordBook my_record;

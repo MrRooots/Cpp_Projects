@@ -1,6 +1,4 @@
-#include <iostream>
 #include <vector>  // Реализация массива
-using namespace std;
 
 // Класс група - содержит массив зачеток - объектов класса RecordBook
 class Group {

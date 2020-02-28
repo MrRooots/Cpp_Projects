@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "g++.exe build active file",
+      "command": "D:/Programms/MinGW---Compiler/bin/g++.exe",
+      "args": [
+        "-g",
+        "${file}",
+        "-o",
+        "${fileDirname}\\${fileBasenameNoExtension}.exe"
+      ],
+      "options": {
+        "cwd": "D:/Programms/MinGW---Compiler/bin"
+      }
+    }
+  ],
+  "version": "2.0.0"
+}
