@@ -1,18 +1,14 @@
 #include <vector>  // Реализация массива
+using namespace std;
 
 // Класс група - содержит массив зачеток - объектов класса RecordBook
 class Group {
 public:
-  // Добавление студента в список
-  void append_student(RecordBook);
-  // Вывод информации о студентах в группе (всех)
-  void get_group_list();
-  // Вывод информации о студентах в группе (по индексу)
-  void get_group_list(size_t);
-  // Поиск студента по ФИО
-  void find_student(string);
-  // Определяет встречается ли элемент в принятом массиве
-  bool is_inside(LIST_TYPO, string);
+  void append_student(RecordBook);      // Добавление студента в список
+  void get_group_list();                // Вывод информации о студентах в группе (всех)
+  void get_group_list(size_t);          // Вывод информации о студентах в группе (по индексу)
+  void find_student(string);            // Поиск студента по ФИО
+  bool is_inside(LIST_TYPO, string);    // Определяет встречается ли элемент в принятом массиве
 
 private:
   vector<RecordBook> group_list;  // Вектор объектов класса RecordBook

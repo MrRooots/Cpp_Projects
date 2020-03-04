@@ -1,25 +1,18 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
-class Person{
-public:                // Если ты принимаешь сдесь переменную с таким же именем как и в строке 14, то без стрелочек у тебя будет ошибка,
-                                                                                // мол ты пытешься присвоить переменной name значение name
-  void set_name(string name) {
-    name = name;
-  }
-  void get_name() {
-    cout << name << endl;
-  }
-private:
-  string name = "";   // <- Вот это 14 строка
-};
+size_t get_length(char * line) {
+  size_t i = 0;
+  while (line[++i]){}
+  return i;
+}
 
-
+// Указатели и строки
 int main() {
-  Person vlad;
-  vlad.set_name("Vlad");
-  vlad.get_name();
+  char *name = "Nikita";
 
+  cout << get_length(name);
 
   return 0;
 }

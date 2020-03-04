@@ -1,5 +1,6 @@
-#include <string>
 #include <fstream>   // Запись в файл
+#include <iostream>
+using namespace std;
 
 typedef char LIST_TYPO[3][255];  // Пользовательски тип, для возврата из функции - массив инициалов
 
@@ -13,6 +14,21 @@ public:
   RecordBook read_binary(string, RecordBook &);                             // Чтение из файла
   void change_information_string(char[255]);                                // Изменение строковых данных
   void change_information_digits(size_t);                                   //  Изменение числовой инф-ии
+  void operator=(const RecordBook& object) {                                // Перегрузка опретаора "="
+    for (size_t i = 0; i < 3; i++) {
+      for (size_t l = 0; l < 255; l++) {
+        this->initials[i][l] = object.initials[i][l];
+      }
+      this->pass_balls[i] = object.pass_balls[i];
+      this->full_balls[i] = object.full_balls[i];
+    }
+    for (size_t i = 0; i < 6; i++) {
+      for (size_t l = 0; l < 255; l++) {
+        this->subject_names[i][l] = object.subject_names[i][l];
+        this->dates[i][l] = object.dates[i][l];
+      }
+    }
+  }
 
 private:
   char initials[3][255];        // Инициалы
@@ -22,6 +38,7 @@ private:
   float full_balls[3];          // Числовые баллы
 };
 
+// Конструктор по умолчанию
 RecordBook::RecordBook() {
   // Инициалы
   char initials[3][255] = {"Invanov", "Ivan", "Ivanovich"};
@@ -56,6 +73,7 @@ RecordBook::RecordBook() {
   float full_balls[3]={0, 0, 0}; for (size_t i = 0; i < 3; i++) {this->full_balls[i] = full_balls[i];}
 }
 
+// Конструктор с параметрами
 RecordBook::RecordBook(char initials[][255], char subject_names[][255], char dates[][255], size_t pass_balls[], float full_balls[]) {
   for (size_t i = 0; i < 3; i++) {
     for (size_t l = 0; l < 255; l++) {
@@ -80,6 +98,7 @@ RecordBook::RecordBook(char initials[][255], char subject_names[][255], char dat
   }
 }
 
+// Получение массива инициалов
 LIST_TYPO* RecordBook::get_initials() {
   static LIST_TYPO list{"", "", ""};
   for (size_t i = 0; i < 3; i++) {
@@ -113,39 +132,40 @@ void RecordBook::get_full_info() {
   cout << endl << endl;
 }
 
-// Метод изменения - принимает заранее введенный параметр, который надо изменить
+// Метод изменения - принимает заранее введенный параметр, на который надо изменить
 void RecordBook::change_information_string(char info_to_change[255]) {
   size_t choice;
   cout << "What do you want to change?\n1)Initials\n2)Subject Names\n3)Dates\n4)Pass Balls\n5)Full Balls\nYour choice: "; cin >> choice;
 
-  // Посимвольное изменение данных о ФИО
-  if (choice == 1) {
-    size_t choice;
-    cout << "1)Surname 2)Name 3)Lastname\nYour choice: "; cin >> choice;
+  switch (choice) {
+    case 1: {  // Посимвольное изменение данных о ФИО
+      size_t choice;
+      cout << "1)Surname 2)Name 3)Lastname\nYour choice: "; cin >> choice;
 
-    for (size_t i = 0; i < 255; i++) {
-      initials[choice - 1][i] = info_to_change[i];
+      for (size_t i = 0; i < 255; i++) {
+        initials[choice - 1][i] = info_to_change[i];
+      }
+      break;
     }
-  }
+    case 2: {  // Посимвольное изменение данных о предметах
+      size_t choice;
+      cout << "Number of subject to change: "; cin >> choice;
 
-  // Посимвольное изменение данных о предметах
-  if (choice == 2) {
-    size_t choice;
-    cout << "Number of subject to change: "; cin >> choice;
+      for (size_t i = 0; i < 255; i++) {
+        subject_names[choice - 1][i] = info_to_change[i];
+      }
+      break;
+    }  
+    case 3: {  // Посимвольное изменение данных о датах
+      size_t choice;
+      cout << "Number of date to change: "; cin >> choice;
 
-    for (size_t i = 0; i < 255; i++) {
-      subject_names[choice - 1][i] = info_to_change[i];
+      for (size_t i = 0; i < 255; i++) {
+        dates[choice - 1][i] = info_to_change[i];
+      }
+      break;
     }
-  }
-
-  // Посимвольное изменение данных о датах
-  if (choice == 3) {
-    size_t choice;
-    cout << "Number of date to change: "; cin >> choice;
-
-    for (size_t i = 0; i < 255; i++) {
-      dates[choice - 1][i] = info_to_change[i];
-    }
+      
   }
 }
 

@@ -10,10 +10,17 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "D:/Programms/MinGW---Compiler/bin/g++.exe",
+            "compilerPath": "C:/Programms/MinGW/bin/g++.exe",
             "cStandard": "c11",
             "cppStandard": "c++20",
-            "intelliSenseMode": "gcc-x86"
+            "intelliSenseMode": "gcc-x86",
+            "browse": {
+                "path": [
+                    "${workspaceRoot}",
+                    "C:\\Programs\\MinGW\\lib\\gcc\\mingw32\\8.2.0\\include\\c++"
+                ]
+            }
+
         }
     ],
     "version": 4
