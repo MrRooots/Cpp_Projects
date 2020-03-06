@@ -11,7 +11,6 @@ size_t get_length(char * line) {
 // Указатели и строки
 int main() {
   char *name = "Nikita";
-
   cout << get_length(name);
 
   return 0;
