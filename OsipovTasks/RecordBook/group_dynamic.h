@@ -1,6 +1,7 @@
 struct GroupElement {
-  RecordBook object;  // Поле будет содержать предназначенный ему объект класса RecordBook
-  GroupElement *toNext;  // Указатель на следующую структуру
+  RecordBook object;      // Поле будет содержать предназначенный ему объект класса RecordBook
+  GroupElement *toNext;   // Указатель на следующую структуру
+  GroupElement *toPrev;   // Указатель на предыдущую структуру
 };
 
 class GroupList {
@@ -13,6 +14,7 @@ public:
   void print();                           // Печать содержимого
   void search(char[255]);                 // Поиск по одному из инициалов
   bool isInside(LIST_TYPO, string);       // Есть ли элемент в массиве
+  void sort_me();                         // Отсортирует список по имени/фамилии студента
 private:
   GroupElement *Head;                     // Голова списка типа GroupElement
   size_t length;
@@ -104,4 +106,14 @@ void GroupList::removeByIndex(size_t index) {
       current_index++;
     }
   }
+}
+
+// Удаление зачетки по имени/фамилии
+void GroupList::removeByName(string name) {
+
+}
+
+// Отсортирует список по имени/фамилии студента
+void GroupList::sort_me() {
+
 }

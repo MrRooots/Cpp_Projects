@@ -41,7 +41,7 @@ private:
 // Конструктор по умолчанию
 RecordBook::RecordBook() {
   // Инициалы
-  char initials[3][255] = {"Invanov", "Ivan", "Ivanovich"};
+  char initials[3][255] = {"Ivanov", "Ivan", "Ivanovich"};
   for (size_t i = 0; i < 3; i++) {
     for (size_t l = 0; l < 255; l++) {
       this->initials[i][l] = initials[i][l];

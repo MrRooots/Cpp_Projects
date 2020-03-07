@@ -18,7 +18,6 @@ int main() {
     "01.01.2020", "02.01.2020", "03.01.2020",
     "04.01.2020", "05.01.2020", "06.01.2020"
   };
-  // alpha
   size_t pass_balls_list[3]{1, 0, 1};
   float full_balls_list[3]{100, 101, 102};
 
@@ -36,7 +35,7 @@ int main() {
   }
 
   // Цикл с выбором действий
-  cout << "Exit - 0\nSave - 1\nRead - 2\nPrint - 3\nChange - 4\nTest Find Student - 5\nEmpty record - 6\n";
+  cout << "Exit - 0\nSave - 1\nRead - 2\nPrint - 3\nChange - 4\nTest Find Student - 5\nEmpty record - 6\nSort List - 7\n";
   while (true) {
     cout << "Your choice: "; cin >> choice;
     switch (choice) {
@@ -89,6 +88,19 @@ int main() {
         RecordBook empty_record;
         my_record = empty_record;
         break;
+      }
+      case 7: {  // Сортировка имеющегося списка (По имени/фамилии)
+        RecordBook zero_record, first_record, second_record, third_record(initials_list, subject_names, dates_list, pass_balls_list, full_balls_list);  // С предустановкой;;
+
+        current_group.append(zero_record);
+        current_group.append(third_record);
+        current_group.append(first_record);
+        current_group.append(third_record);
+        current_group.append(second_record);
+
+        current_group.sort_me();
+
+        // current_group.print();
       }
     }
   }
