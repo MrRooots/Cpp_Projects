@@ -76,8 +76,7 @@ int main() {
         vector<RecordBook> toAdd = {first_record, fifth_record, third_record, second_record, fourth_record, first_record, fourth_record, third_record};
         
         GroupList current_group(toAdd);
-        // GroupList current_group(first_record, second_record, second_record, first_record, second_record);  // Пока не работает :)
-      
+
         current_group.print();
 
         size_t index; cout << "Enter a number to remove: "; cin >> index;

@@ -14,7 +14,7 @@ public:
   GroupList();                                            // Конструктор
   GroupList(vector<RecordBook>);                          // Конструктор, принимает вектор зачеток
   // GroupList(RecordBook, ...);                          // По идее принимает переменное кол-во зачеток, но пока не работает :)
-  // ~GroupList();                                        // Деструктор, без понятия как его реализовать, ведь у std::list уже есть свой деструктор
+  ~GroupList() {};                                        // Деструктор, без понятия как его реализовать, ведь у std::list уже есть свой деструктор
   void append(RecordBook);                                // Добавление элемента
   void removeByIndex(size_t);                             // Удаление книжки по номеру
   void removeByName(string);                              // Удаление книжки по имени студента
@@ -51,10 +51,10 @@ GroupList::GroupList(vector<RecordBook> toAdd) {
 // GroupList::GroupList(RecordBook record, ...) {
 //   RecordBook *record_pointers = &record;
 
-//   while (record_pointers) {
-//     record_pointers++;
-//     append(*record_pointers);
-//   }
+//   (*record_pointers).get_full_info();
+//   record_pointers++;
+//   (*record_pointers).get_full_info();
+//   // record_pointers++;
 // }
 
 /* ------------------------------------------------------------ МЕТОДЫ ------------------------------------------------------------ */
