@@ -9,6 +9,11 @@
     "vector": "cpp",
     "functional": "cpp",
     "array": "cpp",
-    "*.tcc": "cpp"
+    "*.tcc": "cpp",
+    "list": "cpp",
+    "string_view": "cpp",
+    "unordered_map": "cpp",
+    "initializer_list": "cpp",
+    "sstream": "cpp"
   }
 }
