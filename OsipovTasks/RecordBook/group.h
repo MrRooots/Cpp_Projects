@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include <list>
 using namespace std;
 
@@ -14,14 +15,14 @@ public:
   GroupList();                                            // Конструктор
   GroupList(vector<RecordBook>);                          // Конструктор, принимает вектор зачеток
   // GroupList(RecordBook, ...);                          // По идее принимает переменное кол-во зачеток, но пока не работает :)
-  ~GroupList() {};                                        // Деструктор, без понятия как его реализовать, ведь у std::list уже есть свой деструктор
+  ~GroupList() {cout << "Group Destructed!" << endl;};    // Деструктор
   void append(RecordBook);                                // Добавление элемента
   void removeByIndex(size_t);                             // Удаление книжки по номеру
   void removeByName(string);                              // Удаление книжки по имени студента
   void print();                                           // Печать содержимого
   void search(char[str_len]);                             // Поиск по одному из инициалов
   bool isInside(vector<char*>, string);                   // Есть ли элемент в массиве
-  bool compare(list<RecordBook>::iterator, RecordBook);    // Сравнение по первой букве фамилии двух зачеток
+  bool compare(list<RecordBook>::iterator, RecordBook);   // Сравнение по первой букве фамилии двух зачеток
   void operator+ (RecordBook object) {
     append(object);
   }
@@ -30,7 +31,7 @@ public:
   }
 private:
   list<RecordBook> group_list;
-  size_t group_length = 1;
+  size_t group_length = 0;
 };
 
 /* ------------------------------------------------------------ КОНСТРУКТОРЫ ------------------------------------------------------------ */
@@ -47,16 +48,6 @@ GroupList::GroupList(vector<RecordBook> toAdd) {
   }
 }
 
-// // По идее принимает переменное кол-во зачеток, но пока не работает :)
-// GroupList::GroupList(RecordBook record, ...) {
-//   RecordBook *record_pointers = &record;
-
-//   (*record_pointers).get_full_info();
-//   record_pointers++;
-//   (*record_pointers).get_full_info();
-//   // record_pointers++;
-// }
-
 /* ------------------------------------------------------------ МЕТОДЫ ------------------------------------------------------------ */
 
 // Сортировка по ФИО
@@ -72,7 +63,7 @@ bool GroupList::compare(list<RecordBook>::iterator group_object, RecordBook reco
     record += initial;
   }
   int compare_result = strcmp(group.c_str(), record.c_str());  // Фамилии
-  cout << group << ' ' << record << ' ' << compare_result << endl;      
+  // cout << group << ' ' << record << ' ' << compare_result << endl;      
   if (compare_result == -1) {
     return true;
   }
@@ -82,7 +73,8 @@ bool GroupList::compare(list<RecordBook>::iterator group_object, RecordBook reco
 // Добавление элемента
 void GroupList::append(RecordBook record) {
   // Если список пуст - просто всунем элемент
-  if (group_list.size() == 0) {
+  group_length++;
+  if (group_length == 1) {
     group_list.push_back(record);
   } else {
     for (auto i = group_list.begin(); i != group_list.end(); ++i) {
@@ -116,13 +108,11 @@ void GroupList::removeByName(string initial) {
 
 // Печать содержимого
 void GroupList::print() {
-  size_t i = 1;
-
-  for (auto cur_record = --group_list.end(); cur_record != group_list.begin(); cur_record--) {
-    cout << i++ << "|---";
+  size_t i = group_length;
+  for (auto cur_record = group_list.rbegin(); cur_record != group_list.rend(); ++cur_record) {
+    cout << i-- << "|---";
     (*cur_record).get_full_info();
   }
-  cout << i++ << "|---"; ((*group_list.begin()).get_full_info());
 }
 
 // Поиск по одному из инициалов
