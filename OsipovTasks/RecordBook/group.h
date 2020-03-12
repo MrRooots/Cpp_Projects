@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 #include <list>
 using namespace std;
 
@@ -15,7 +14,7 @@ public:
   GroupList();                                            // Конструктор
   GroupList(vector<RecordBook>);                          // Конструктор, принимает вектор зачеток
   // GroupList(RecordBook, ...);                          // По идее принимает переменное кол-во зачеток, но пока не работает :)
-  ~GroupList() {cout << "Group Destructed!" << endl;};    // Деструктор
+  ~GroupList();                                           // Деструктор
   void append(RecordBook);                                // Добавление элемента
   void removeByIndex(size_t);                             // Удаление книжки по номеру
   void removeByName(string);                              // Удаление книжки по имени студента
@@ -46,6 +45,13 @@ GroupList::GroupList(vector<RecordBook> toAdd) {
   for (auto record : toAdd) {
     append(record);
   }
+}
+
+// Деструктор
+GroupList::~GroupList() {
+  group_list.clear();
+  delete &group_list;
+  cout << "Destructed!" << endl;
 }
 
 /* ------------------------------------------------------------ МЕТОДЫ ------------------------------------------------------------ */
