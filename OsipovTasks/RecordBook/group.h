@@ -1,32 +1,30 @@
 #include <iostream>
+#include <cstdarg>
 #include <list>
 using namespace std;
 
-/*
-TODO:
-  1) Операторы ввода-вывода в поток для "зачетки"
-  // оператор "-" должен работать по номеру удаляемой зачетки или по имени студента, зачетку которого надо удалить или просто по номеру зачетки?
-  2) Операторы + и - для "группы"
-*/
-
 class GroupList {
 public:
-  GroupList();                                            // Конструктор
+  GroupList(size_t, RecordBook, ...);                     // По идее принимает переменное кол-во зачеток, но требует их количество, как первый параметр
   GroupList(vector<RecordBook>);                          // Конструктор, принимает вектор зачеток
-  // GroupList(RecordBook, ...);                          // По идее принимает переменное кол-во зачеток, но пока не работает :)
   ~GroupList();                                           // Деструктор
   void append(RecordBook);                                // Добавление элемента
-  void removeByIndex(size_t);                             // Удаление книжки по номеру
-  void removeByName(string);                              // Удаление книжки по имени студента
+  void remove(size_t);                                    // Удаление книжки по номеру
+  void remove(string);                                    // Удаление книжки по имени студента
   void print();                                           // Печать содержимого
-  void search(char[str_len]);                             // Поиск по одному из инициалов
+  void search(char[str_len]);                             // Поиск по одному из инициалов или по трем сразу (без пробелов)
   bool isInside(vector<char*>, string);                   // Есть ли элемент в массиве
   bool compare(list<RecordBook>::iterator, RecordBook);   // Сравнение по первой букве фамилии двух зачеток
-  void operator+ (RecordBook object) {
+  void operator+ (RecordBook object) {                    // Просто добавит зачетку в группу
     append(object);
   }
-  void operator- (RecordBook object) {
-    removeByName(object.get_initials()[0]);  // Удалит по фамилии
+  void operator- (RecordBook object) {                    // Удалит первое совпадение по иниациалам из группы
+    vector<char*> init = object.get_initials();
+    string to_remove = "";
+    for (char* x : init) {
+      to_remove += x;
+    }
+    remove(to_remove);
   }
 private:
   list<RecordBook> group_list;
@@ -35,15 +33,18 @@ private:
 
 /* ------------------------------------------------------------ КОНСТРУКТОРЫ ------------------------------------------------------------ */
 
-// Конструктор по умолчанию
-GroupList::GroupList() {
-  cout << "**Group Constructed!" << endl;
-}
-
 // Конструктор, который принимает вектор зачеток
 GroupList::GroupList(vector<RecordBook> toAdd) {
   for (auto record : toAdd) {
     append(record);
+  }
+}
+
+// По идее принимает переменное кол-во зачеток, но требует их количество, как первый параметр
+GroupList::GroupList(size_t count, RecordBook records, ...) {
+  RecordBook* object = &records;
+  for (size_t i = 0; i < count; i++) {
+    append(*object); ++object;
   }
 }
 
@@ -69,7 +70,6 @@ bool GroupList::compare(list<RecordBook>::iterator group_object, RecordBook reco
     record += initial;
   }
   int compare_result = strcmp(group.c_str(), record.c_str());  // Фамилии
-  // cout << group << ' ' << record << ' ' << compare_result << endl;      
   if (compare_result == -1) {
     return true;
   }
@@ -96,17 +96,19 @@ void GroupList::append(RecordBook record) {
 }
 
 // Удаление книжки по номеру
-void GroupList::removeByIndex(size_t index) {
+void GroupList::remove(size_t index) {
   auto my_iterator = group_list.begin();
   advance(my_iterator, --index);
   group_list.erase(my_iterator);
+  group_length--;
 }
 
 // Удаление книжки по имени студента  (Удалит первое найденное совпадение)
-void GroupList::removeByName(string initial) {
+void GroupList::remove(string initial) {
   for (auto i = group_list.begin(); i != group_list.end(); ++i) {
     if (isInside((*i).get_initials(), initial)) {
       group_list.erase(i);
+      group_length--;
       break;
     }
   }
@@ -121,7 +123,7 @@ void GroupList::print() {
   }
 }
 
-// Поиск по одному из инициалов
+// Поиск по одному из инициалов или по трем сразу (без пробелов)
 void GroupList::search(char initial[str_len]) {
   for (auto i = group_list.begin(); i != group_list.end(); ++i) {
     if (isInside((*i).get_initials(), initial)) {
@@ -132,6 +134,14 @@ void GroupList::search(char initial[str_len]) {
 
 // Есть ли элемент в массиве
 bool GroupList::isInside(vector<char*> array, string toSearch) {
+  string initial_line = "";
+  for (char* x : array) {initial_line += x;}
+  // Проверка полного совпадения ФИО
+  if (!strcmp(initial_line.c_str(), toSearch.c_str())) {
+    group_length--;
+    return true;
+  }
+  // Проверка совпадения хотя бы одного инициала
   for (size_t i = 0; i < 3; i++) {
     if (!strcmp(array[i], toSearch.c_str())) {
       return true;

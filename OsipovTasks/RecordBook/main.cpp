@@ -32,7 +32,6 @@ int main() {
     cout << "This infarmation was read from file:\n";
     my_record.get_full_info();
   }
-
   // Цикл с выбором действий
   cout << "Exit - 0\nSave - 1\nRead - 2\nPrint - 3\nChange - 4\nTest Find Student - 5\nEmpty record - 6\n";
   while (true) {
@@ -73,14 +72,10 @@ int main() {
                     fourth_record(initials_list_2, subject_names, dates_list, pass_balls_list, full_balls_list),
                     fifth_record(initials_list_0, subject_names, dates_list, pass_balls_list, full_balls_list);
         
-        vector<RecordBook> toAdd = {first_record, fifth_record, third_record, second_record, fourth_record, first_record, fourth_record, third_record};
-        
-        GroupList current_group(toAdd);
+        // vector<RecordBook> toAdd = {first_record, fifth_record, third_record, second_record, fourth_record, first_record, fourth_record, third_record};
+        // GroupList current_group(toAdd);
 
-        current_group.print();
-
-        size_t index; cout << "Enter a number to remove: "; cin >> index;
-        current_group.removeByIndex(index);
+        GroupList current_group(8, first_record, fifth_record, third_record, second_record, fourth_record, first_record, fourth_record, third_record);
         current_group.print();
         break;
       }
